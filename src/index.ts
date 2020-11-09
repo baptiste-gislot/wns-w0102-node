@@ -1,5 +1,5 @@
-const express = require("express");
-const mongoose = require("mongoose");
+import express, { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 const wilderControllers = require("./controllers/wilder");
 
@@ -15,8 +15,8 @@ mongoose
 
 const server = express().use(express.json());
 
-const asyncErrorHandler = (callback) => (req, res) => {
-  callback(req, res).catch((err) => {
+const asyncErrorHandler = (callback: Function) => (req: Request, res: Response) => {
+  callback(req, res).catch((err: any) => {
     if (err.name == "MongoError" && err.code == 11000) {
       const error = err.keyPattern.name
         ? "Name already exists"

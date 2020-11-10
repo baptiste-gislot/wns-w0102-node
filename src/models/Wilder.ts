@@ -1,9 +1,19 @@
-import mongoose, { Schema } from 'mongoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 
-const WilderSchema = new Schema({
-  name: { type: String, unique: true },
-  city: String,
-  skills: [{ title: String, voteCount: Number }],
-});
+type Skill = {
+  title: string;
+  voteCount: number;
+};
 
-export default mongoose.model('wilder', WilderSchema);
+class Wilder {
+  @prop({ unique: true })
+  public name: string;
+
+  @prop()
+  public city: string;
+
+  @prop()
+  public skills: Skill[];
+}
+
+export default getModelForClass(Wilder);
